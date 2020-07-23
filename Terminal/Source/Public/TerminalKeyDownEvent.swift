@@ -1,6 +1,6 @@
 import Foundation
-
-public enum TerminalKeyDownEvent {
+ 
+@objc public enum TerminalKeyDownEvent: Int, RawRepresentable {
     case escape
     case backspace
     case tab
