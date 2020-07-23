@@ -77,7 +77,7 @@ final class HtermWebView: WKWebView {
     var cursorShape: TerminalCursorShape = .beam {
         didSet {
             if isHtermLoaded, oldValue != cursorShape {
-                evaluateOneArgumentJavaScript(functionName: "term.setCursorShape", arg: cursorShape.rawValue)
+                evaluateOneArgumentJavaScript(functionName: "term.setCursorShape", arg: cursorShape.stringValue)
             }
         }
     }

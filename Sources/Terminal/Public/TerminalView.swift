@@ -6,39 +6,50 @@ public enum TerminalMode {
     case scroll
 }
 
-public enum TerminalCursorShape: String {
-    case block = "BLOCK"
-    case beam = "BEAM"
-    case underline = "UNDERLINE"
+@objc public enum TerminalCursorShape: Int {
+    case block
+    case beam
+    case underline
+	
+	var stringValue: String {
+		switch self {
+		case .block:
+			return "BLOCK"
+		case .beam:
+			return "BEAM"
+		case .underline:
+			return "UNDERLINE"
+		}
+	}
 }
 
-public protocol TerminalViewDelegate: AnyObject {
-    func terminalViewDidLoad(_ terminalView: TerminalView)
+@objc public protocol TerminalViewDelegate: AnyObject {
+    @objc func terminalViewDidLoad(_ terminalView: TerminalView)
 
-    func terminalView(_ terminalView: TerminalView, didChangeTerminalSize oldSize: TerminalSize)
-    func terminalView(_ terminalView: TerminalView, didHandleURL url: URL)
+    @objc func terminalView(_ terminalView: TerminalView, didChangeTerminalSize oldSize: TerminalSize)
+    @objc func terminalView(_ terminalView: TerminalView, didHandleURL url: URL)
 
-    func terminalView(_ terminalView: TerminalView, didHandleKeyInput string: String)
-    func terminalViewDidHandleDeleteBackward(_ terminalView: TerminalView)
+    @objc func terminalView(_ terminalView: TerminalView, didHandleKeyInput string: String)
+    @objc func terminalViewDidHandleDeleteBackward(_ terminalView: TerminalView)
 
-    func terminalView(_ terminalView: TerminalView, didHandleSendString string: String)
-    func terminalView(_ terminalView: TerminalView, didHandleOnVTKeyStroke string: String)
+    @objc func terminalView(_ terminalView: TerminalView, didHandleSendString string: String)
+    @objc func terminalView(_ terminalView: TerminalView, didHandleOnVTKeyStroke string: String)
 
-    func terminalViewRequestInputAccessoryView(_ terminalView: TerminalView) -> UIView?
-    func terminalViewRequestInputAccessoryViewController(_ terminalView: TerminalView) -> UIInputViewController?
+    @objc func terminalViewRequestInputAccessoryView(_ terminalView: TerminalView) -> UIView?
+    @objc func terminalViewRequestInputAccessoryViewController(_ terminalView: TerminalView) -> UIInputViewController?
 
-    func terminalViewDidChangeMode(_ terminalView: TerminalView)
+    @objc func terminalViewDidChangeMode(_ terminalView: TerminalView)
 }
 
 public final class TerminalView: UIView {
 
     // MARK: - Public Vars
 
-    public weak var delegate: TerminalViewDelegate?
+    @objc public weak var delegate: TerminalViewDelegate?
 
-    public var isTerminalLoaded: Bool { htermWebView?.isHtermLoaded ?? false }
+    @objc public var isTerminalLoaded: Bool { htermWebView?.isHtermLoaded ?? false }
 
-    public var terminalSize: TerminalSize { htermWebView?.terminalSize ?? .zero }
+    @objc public var terminalSize: TerminalSize { htermWebView?.terminalSize ?? .zero }
 
     public private(set) var mode: TerminalMode = .input {
         didSet {
@@ -54,16 +65,16 @@ public final class TerminalView: UIView {
         set { htermWebView?.isContentEditable = newValue }
     }
 
-    public var isTerminalCursorBlink: Bool {
+    @objc public var isTerminalCursorBlink: Bool {
         get { htermWebView?.isCursorBlink ?? true }
         set { htermWebView?.isCursorBlink = newValue }
     }
-    public var terminalCursorShape: TerminalCursorShape {
+    @objc public var terminalCursorShape: TerminalCursorShape {
         get { htermWebView?.cursorShape ?? .beam }
         set { htermWebView?.cursorShape = newValue }
     }
 
-    public var isControlKeyPressed: Bool = false
+    @objc public var isControlKeyPressed: Bool = false
     public var isMetaKeyPressed: Bool = false
 
     public var useOptionKeyAsMetaKey: Bool = false {
@@ -476,7 +487,7 @@ public final class TerminalView: UIView {
 
     // MARK: - Public Methods for Input/Scroll Mode Change
 
-    public func enterInputMode() {
+    @objc public func enterInputMode() {
         guard mode != .input, let htermWebView = htermWebView else {
             return
         }
@@ -506,7 +517,7 @@ public final class TerminalView: UIView {
         }
     }
 
-    public func appendBuffer(_ buf: Data) {
+    @objc public func appendBuffer(_ buf: Data) {
         bufferQueue.async {
             self.buffer.append(buf)
             DispatchQueue.main.async { [weak self] in
@@ -517,7 +528,7 @@ public final class TerminalView: UIView {
 
     // MARK: - Public Method for Key Down Event
 
-    public func press(_ event: TerminalKeyDownEvent) {
+    @objc public func press(_ event: TerminalKeyDownEvent) {
         handleKeyInput(event.string)
     }
 
@@ -547,7 +558,8 @@ public final class TerminalView: UIView {
 
     // MARK: - Public Methods for Force Reload
 
-    public func reloadTerminal() {
+    @objc
+	public func reloadTerminal() {
         htermWebView?.reloadHterm()
     }
 
@@ -582,7 +594,7 @@ extension TerminalView: UIKeyInput {
         return htermWebView.isHtermLoaded
     }
 
-    public func insertText(_ text: String) {
+    @objc public func insertText(_ text: String) {
         if isControlKeyPressed == true, isMetaKeyPressed == false, let controled = text.combineWithControlKey() {
             handleKeyInput(controled)
         } else if isMetaKeyPressed == true, isControlKeyPressed == false, let metaPrefixed = text.combineWithMetaKey() {
