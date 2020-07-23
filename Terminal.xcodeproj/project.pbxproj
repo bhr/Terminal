@@ -89,14 +89,13 @@
 		190296D5247D2A8900C019C5 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
+				8D1BCE5C24C9A3AB00C36FE7 /* Source */,
 				19894269249D2E9700CBF00E /* LICENSE */,
 				1989426A249D2E9800CBF00E /* README.md */,
 				19029703247D383000C019C5 /* Information */,
 				19029704247D386300C019C5 /* dotfiles */,
 				193FEBE6247FF138004EC6F9 /* bin */,
 				1930D09C24801D2100882D16 /* Resources */,
-				19029714247D3ACE00C019C5 /* Public */,
-				1930D0AB248030CD00882D16 /* Internal */,
 			);
 			path = Terminal;
 			sourceTree = "<group>";
@@ -104,7 +103,6 @@
 		19029703247D383000C019C5 /* Information */ = {
 			isa = PBXGroup;
 			children = (
-				190296D6247D2A8900C019C5 /* Terminal.h */,
 				190296D7247D2A8900C019C5 /* Info.plist */,
 			);
 			name = Information;
@@ -165,6 +163,16 @@
 				193FEBE7247FF144004EC6F9 /* build_hterm.sh */,
 			);
 			name = bin;
+			sourceTree = "<group>";
+		};
+		8D1BCE5C24C9A3AB00C36FE7 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				190296D6247D2A8900C019C5 /* Terminal.h */,
+				19029714247D3ACE00C019C5 /* Public */,
+				1930D0AB248030CD00882D16 /* Internal */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
