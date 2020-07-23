@@ -16,4 +16,7 @@ Pod::Spec.new do |s|
   s.exclude_files = 'Terminal/Example/*'
   s.frameworks = 'UIKit'
   s.module_name = 'DNPPTerminal'
+  s.prepare_command = <<-CMD
+        sh $PWD/build_hterm.sh
+     CMD
 end
