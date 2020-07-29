@@ -600,7 +600,8 @@ extension TerminalView: UIKeyInput {
         } else if isMetaKeyPressed == true, isControlKeyPressed == false, let metaPrefixed = text.combineWithMetaKey() {
             handleKeyInput(metaPrefixed)
         } else {
-            handleKeyInput(text)
+			let modifiedText = text.replacingOccurrences(of: "\n", with: "\r")
+            handleKeyInput(modifiedText)
         }
     }
 
