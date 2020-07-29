@@ -267,7 +267,12 @@ public final class TerminalView: UIView {
         case #selector(UIResponderStandardEditActions.copy):
             return false
         case #selector(UIResponderStandardEditActions.paste(_:)):
-            return htermWebView.isHtermLoaded
+//			Don't access pasteboard string as it causes popup to show on iOS 14
+//            if UIPasteboard.general.string?.count ?? 0 > 0 {
+                return htermWebView.isHtermLoaded
+//            } else {
+//                return false
+//            }
         case #selector(UIResponderStandardEditActions.delete(_:)):
             return false
         case #selector(UIResponderStandardEditActions.select(_:)):
