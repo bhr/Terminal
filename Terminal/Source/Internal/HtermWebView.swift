@@ -17,7 +17,9 @@ final class HtermWebView: WKWebView {
                 if oldValue == false {
                     reloadHtermColors()
                 }
-                terminalView.delegate?.terminalViewDidLoad(terminalView)
+				if let terminalView = terminalView {
+					terminalView.delegate?.terminalViewDidLoad(terminalView)
+				}
             }
         }
     }
@@ -25,7 +27,9 @@ final class HtermWebView: WKWebView {
     private(set) var terminalSize: TerminalSize = .zero {
         didSet {
             if oldValue != terminalSize {
-                terminalView.delegate?.terminalView(terminalView, didChangeTerminalSize: oldValue)
+				if let terminalView = terminalView {
+					terminalView.delegate?.terminalView(terminalView, didChangeTerminalSize: oldValue)
+				}
             }
         }
     }
@@ -117,11 +121,8 @@ final class HtermWebView: WKWebView {
     weak var parent: TerminalView?
 
     // shorthand
-    private var terminalView: TerminalView {
-        guard let terminalView = parent else {
-            fatalError("must not here")
-        }
-        return terminalView
+    private var terminalView: TerminalView? {
+        return parent
     }
 
     fileprivate var shouldEnterInputModeWhenJSTouchEnd: Bool = false
@@ -318,25 +319,31 @@ extension HtermWebView: WKScriptMessageHandler {
             case .htermScrollPortDidTouchEnd:
                 if self.shouldEnterInputModeWhenJSTouchEnd {
                     self.shouldEnterInputModeWhenJSTouchEnd = false
-                    self.terminalView.enterInputMode()
+                    self.terminalView?.enterInputMode()
                 }
             case .htermScrollPortDidTouchCancel:
                 self.shouldEnterInputModeWhenJSTouchEnd = false
             case .htermDidHandleURL:
                 if let body = message.body as? String, let url = URL(string: body) {
-                    self.terminalView.delegate?.terminalView(self.terminalView, didHandleURL: url)
+					if let terminalView = self.terminalView {
+						terminalView.delegate?.terminalView(terminalView, didHandleURL: url)
+					}
                 }
             case .htermHandleSendString:
                 guard let string = message.body as? String else {
                     break
                 }
-                self.terminalView.delegate?.terminalView(self.terminalView, didHandleSendString: string)
+				if let terminalView = self.terminalView {
+					terminalView.delegate?.terminalView(terminalView, didHandleSendString: string)
+				}
                 self.setUserGesture()
             case .htermHandleOnVTKeyStroke:
                 guard let string = message.body as? String else {
                     break
                 }
-                self.terminalView.delegate?.terminalView(self.terminalView, didHandleOnVTKeyStroke: string)
+				if let terminalView = self.terminalView {
+					terminalView.delegate?.terminalView(terminalView, didHandleOnVTKeyStroke: string)
+				}
                 self.setUserGesture()
             case .htermHandleOnTerminalResize:
                 guard let array = message.body as? [Any] else {
