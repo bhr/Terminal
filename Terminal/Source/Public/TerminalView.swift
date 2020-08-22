@@ -524,7 +524,7 @@ public final class TerminalView: UIView {
 
     // MARK: - Public Methods for Scroll
 
-    public func setNeedsTerminalScrollEnd() {
+    @objc public func setNeedsTerminalScrollEnd() {
         needsTerminalScrollEnd = true
         setNeedsLayout()
     }
