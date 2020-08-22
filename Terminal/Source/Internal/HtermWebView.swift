@@ -15,7 +15,7 @@ final class HtermWebView: WKWebView {
         didSet {
             if isHtermLoaded == true {
                 if oldValue == false {
-                    reloadHtermColors()
+                    reloadHtermProperties()
                 }
 				if let terminalView = terminalView {
 					terminalView.delegate?.terminalViewDidLoad(terminalView)
@@ -239,7 +239,7 @@ final class HtermWebView: WKWebView {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 13.0, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                reloadHtermColors()
+                reloadHtermProperties()
             }
         }
     }
@@ -252,14 +252,17 @@ final class HtermWebView: WKWebView {
         }
     }
 
-    private func reloadHtermColors() {
+    private func reloadHtermProperties() {
         guard isHtermLoaded else {
             return
         }
-        evaluateOneArgumentJavaScript(functionName: "term.setBackgroundColor", arg: (backgroundColor ?? .clear).cssString)
-        evaluateOneArgumentJavaScript(functionName: "term.setForegroundColor", arg: foregroundColor.cssString)
-        evaluateOneArgumentJavaScript(functionName: "term.setCursorColor", arg: cursorColor.cssString)
-        evaluateOneArgumentJavaScript(functionName: "term.setFontSize", arg: fontSize)
+		evaluateOneArgumentJavaScript(functionName: "term.setBackgroundColor", arg: (backgroundColor ?? .clear).cssString)
+		evaluateOneArgumentJavaScript(functionName: "term.setForegroundColor", arg: foregroundColor.cssString)
+		evaluateOneArgumentJavaScript(functionName: "term.setCursorColor", arg: cursorColor.cssString)
+		evaluateOneArgumentJavaScript(functionName: "term.setFontSize", arg: fontSize)
+		evaluateOneArgumentJavaScript(functionName: "term.setCursorBlink", arg: isCursorBlink)
+		evaluateOneArgumentJavaScript(functionName: "term.setCursorShape", arg: cursorShape.stringValue)
+		evaluateOneArgumentJavaScript(functionName: "exports.setFontFamily", arg: fontFamily)
     }
 
     func reloadHterm() {
