@@ -18,6 +18,6 @@ Pod::Spec.new do |s|
   s.module_name = 'DNPPTerminal'
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
   s.prepare_command = <<-CMD
-        sh $PWD/build_hterm.sh
+        sh $PWD/bin/build_hterm.sh
      CMD
 end
