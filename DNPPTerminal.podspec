@@ -11,9 +11,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '5.0'
 
-  s.source_files = 'Terminal/Source/**/*.{h,m,swift}'
+  s.source_files = 'Terminal/Sources/**/*.{h,m,swift}'
   s.resources = 'Terminal/Resources/*'
-  s.exclude_files = 'Terminal/Example/*'
+  s.exclude_files = 'Terminal/Example/*,Terminal/gif/*,Terminal/Terminal/*'
   s.frameworks = 'UIKit'
   s.module_name = 'DNPPTerminal'
   s.pod_target_xcconfig = { "DEFINES_MODULE" => "YES" }
