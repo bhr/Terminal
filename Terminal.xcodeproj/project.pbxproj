@@ -96,7 +96,6 @@
 		190296D5247D2A8900C019C5 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
-				190296D6247D2A8900C019C5 /* Terminal.h */,
 				190296D7247D2A8900C019C5 /* Info.plist */,
 			);
 			path = Terminal;
@@ -155,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				19CF7EFB25B9D47000E704BC /* Terminal */,
+				190296D6247D2A8900C019C5 /* Terminal.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
