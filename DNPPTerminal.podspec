@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "DNPPTerminal"
-  s.version          = "0.4"
+  s.version          = "0.4.1"
   s.summary          = "Swift Terminal wrapper using hterm"
   s.homepage         = "https://github.com/bhr/Terminal"
   s.license          = 'Code is MIT.'
