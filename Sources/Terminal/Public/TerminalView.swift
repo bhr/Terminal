@@ -10,7 +10,7 @@ public enum TerminalMode {
     case block
     case beam
     case underline
-	
+
 	var stringValue: String {
 		switch self {
 		case .block:

@@ -1,5 +1,5 @@
 import Foundation
- 
+
 @objc public enum TerminalKeyDownEvent: Int, RawRepresentable {
     case escape
     case backspace
